@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.gov.caudf.sistemas.dto.CategoryActivitiesDTO;
 import br.gov.caudf.sistemas.entities.CategoryActivities;
 import br.gov.caudf.sistemas.repositories.CategoryActivitiesRepository;
-import br.gov.caudf.sistemas.services.exceptions.EntityNotFoundException;
+import br.gov.caudf.sistemas.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoryActivitiesService {
@@ -21,16 +21,14 @@ public class CategoryActivitiesService {
 	
 	@Transactional(readOnly = true)
 	public List<CategoryActivitiesDTO> findAll() {
-		
 		List<CategoryActivities> list = repository.findAll();
-		
 		return list.stream().map(x -> new CategoryActivitiesDTO(x)).collect(Collectors.toList());
 	}
 	
 	@Transactional(readOnly = true)
 	public CategoryActivitiesDTO findById(Long id) {
 		Optional<CategoryActivities> obj = repository.findById(id);
-		CategoryActivities entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade não existe no banco de dados."));
+		CategoryActivities entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não existe no banco de dados."));
 		return new CategoryActivitiesDTO(entity);
 	}
 	
@@ -40,5 +38,18 @@ public class CategoryActivitiesService {
 		entity.setName(dto.getName());
 		entity = repository.save(entity);
 		return new CategoryActivitiesDTO(entity);
+	}
+	
+	@Transactional
+	public CategoryActivitiesDTO update(Long id, CategoryActivitiesDTO dto) {
+		try {
+		CategoryActivities entity = repository.getOne(id);
+		entity.setName(dto.getName());
+		entity = repository.save(entity);
+		return new CategoryActivitiesDTO(entity);
+		}
+		catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("Esse ID não existe no banco de dados" + id);
+		}
 	}
 }
