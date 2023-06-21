@@ -13,10 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-	public ResourceExceptionHandler() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@ExceptionHandler(EntityNotFoundException.class)
 	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
 		StandardError err = new StandardError();

@@ -33,4 +33,12 @@ public class CategoryActivitiesService {
 		CategoryActivities entity = obj.orElseThrow(() -> new EntityNotFoundException("Entidade não existe no banco de dados."));
 		return new CategoryActivitiesDTO(entity);
 	}
+	
+	@Transactional
+	public CategoryActivitiesDTO insert(CategoryActivitiesDTO dto) {
+		CategoryActivities entity = new CategoryActivities();
+		entity.setName(dto.getName());
+		entity = repository.save(entity);
+		return new CategoryActivitiesDTO(entity);
+	}
 }
