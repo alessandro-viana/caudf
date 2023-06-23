@@ -1,12 +1,12 @@
 package br.gov.caudf.sistemas.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +23,9 @@ public class CategoryActivitiesService {
 	private CategoryActivitiesRepository repository;
 	
 	@Transactional(readOnly = true)
-	public List<CategoryActivitiesDTO> findAll() {
-		List<CategoryActivities> list = repository.findAll();
-		return list.stream().map(x -> new CategoryActivitiesDTO(x)).collect(Collectors.toList());
+	public Page<CategoryActivitiesDTO> findAllPaged(PageRequest pageRequest) {
+		Page<CategoryActivities> list = repository.findAll(pageRequest);
+		return list.map(x -> new CategoryActivitiesDTO(x));
 	}
 	
 	@Transactional(readOnly = true)
