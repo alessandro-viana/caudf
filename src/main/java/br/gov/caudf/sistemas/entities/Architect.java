@@ -27,6 +27,7 @@ public class Architect implements Serializable {
 	private Long id;
 	private String name;
 	private String cau;
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	private String imgUrl;
 	
@@ -34,9 +35,9 @@ public class Architect implements Serializable {
 	private Instant date;
 	
 	@ManyToMany
-	@JoinTable(name = "tb_architect_categoryActivities",
+	@JoinTable(name = "tb_architect_category_activities",
 			joinColumns = @JoinColumn(name = "architect_id"),
-			inverseJoinColumns = @JoinColumn(name = "categoryActivities_id")
+			inverseJoinColumns = @JoinColumn(name = "category_activities_id")
 			)
 	Set<CategoryActivities> categories = new HashSet<>();
 	
