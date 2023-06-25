@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.caudf.sistemas.dto.ArchitectDTO;
+import br.gov.caudf.sistemas.dto.CategoryActivitiesDTO;
 import br.gov.caudf.sistemas.entities.Architect;
+import br.gov.caudf.sistemas.entities.CategoryActivities;
 import br.gov.caudf.sistemas.repositories.ArchitectRepository;
+import br.gov.caudf.sistemas.repositories.CategoryActivitiesRepository;
 import br.gov.caudf.sistemas.services.exceptions.DatabaseException;
 import br.gov.caudf.sistemas.services.exceptions.ResourceNotFoundException;
 
@@ -21,6 +24,8 @@ public class ArchitectService {
 
 	@Autowired
 	private ArchitectRepository repository;
+	@Autowired
+	private CategoryActivitiesRepository categoryRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<ArchitectDTO> findAllPaged(PageRequest pageRequest) {
@@ -38,16 +43,16 @@ public class ArchitectService {
 	@Transactional
 	public ArchitectDTO insert(ArchitectDTO dto) {
 		Architect entity = new Architect();
-		//entity.setName(dto.getName());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new ArchitectDTO(entity);
 	}
-	
+		
 	@Transactional
 	public ArchitectDTO update(Long id, ArchitectDTO dto) {
 		try {
 		Architect entity = repository.getOne(id);
-		//entity.setName(dto.getName());
+		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new ArchitectDTO(entity);
 		}
@@ -65,5 +70,20 @@ public class ArchitectService {
 			throw new DatabaseException("Violação de Integridado do Banco de Dados");
 		}
 		
+	}
+	
+	private void copyDtoToEntity(ArchitectDTO dto, Architect entity) {
+		entity.setName(dto.getName());
+		entity.setCau(dto.getCau());
+		entity.setDescription(dto.getDescription());
+		entity.setImgUrl(dto.getImgUrl());
+		entity.setDate(dto.getDate());
+		
+		entity.getCategories().clear();
+		
+		for (CategoryActivitiesDTO catDto : dto.getCategories()) {
+			CategoryActivities category = categoryRepository.getOne(catDto.getId());
+			entity.getCategories().add(category);
+		}
 	}
 }
