@@ -2,13 +2,16 @@ package br.gov.caudf.sistemas.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
@@ -28,6 +31,9 @@ public class CategoryActivities implements Serializable {
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
+	
+	@ManyToMany(mappedBy = "categories")
+	private Set<Architect> architect = new HashSet<>();
 	
 	public CategoryActivities() {
 		
@@ -54,6 +60,10 @@ public class CategoryActivities implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+	
+	public Set<Architect> getArchitect() {
+		return architect;
 	}
 
 	@Override
