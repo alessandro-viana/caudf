@@ -1,7 +1,6 @@
 package br.gov.caudf.sistemas.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.gov.caudf.sistemas.dto.ArchitectDTO;
 import br.gov.caudf.sistemas.services.ArchitectService;
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping(value = "/architect")
@@ -51,14 +52,14 @@ public class ArchitectResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ArchitectDTO> insert(@RequestBody ArchitectDTO dto){
+	public ResponseEntity<ArchitectDTO> insert(@Valid @RequestBody ArchitectDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ArchitectDTO> update(@PathVariable Long id, @RequestBody ArchitectDTO dto){
+	public ResponseEntity<ArchitectDTO> update(@PathVariable Long id, @Valid @RequestBody ArchitectDTO dto){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

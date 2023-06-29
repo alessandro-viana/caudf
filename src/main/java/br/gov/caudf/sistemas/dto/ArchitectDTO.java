@@ -8,16 +8,26 @@ import java.util.Set;
 
 import br.gov.caudf.sistemas.entities.Architect;
 import br.gov.caudf.sistemas.entities.CategoryActivities;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 public class ArchitectDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@Size(min =5, max = 90, message = "Deve ter entre 5 e 90 caracteres")
+	@NotBlank(message = "Campo nome obrigatório")
 	private String name;
+	
+	@NotBlank(message = "Número do CAU obrigatório")
 	private String cau;
 	private String description;
 	private String imgUrl;
+	
+	@PastOrPresent(message = "A data não pode ser futura")
 	private Instant date;
 	
 	private List<CategoryActivitiesDTO> categories = new ArrayList<>();
