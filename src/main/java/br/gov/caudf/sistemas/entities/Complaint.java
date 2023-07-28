@@ -2,68 +2,68 @@ package br.gov.caudf.sistemas.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-
 @Entity
-@Table(name = "tb_category_activities")
-public class CategoryActivities implements Serializable {
+@Table(name = "tb_complaint")
+public class Complaint implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	
+	private String number;
+	private String protocol;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant createdAt;
-	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant updatedAt;
-	
-	@ManyToMany(mappedBy = "categories")
-	private Set<Architect> architect = new HashSet<>();
-	
-	public CategoryActivities() {
+	private Instant date;
 		
+	public Complaint() {
+	}
+	
+	public Complaint(Long id, String number, String protocol, Instant date) {
+		super();
+		this.id = id;
+		this.number = number;
+		this.protocol = protocol;
+		this.date = date;
 	}
 
-	public CategoryActivities(Long id, String name) {
-		this.id = id;
-		this.name = name;
+
+	public String getNumber() {
+		return number;
 	}
-	
-	public Long getId() {
-		return id;
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public String getProtocol() {
+		return protocol;
 	}
-	public String getName() {
-		return name;
+
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public Instant getDate() {
+		return date;
+	}
+
+	public void setDate(Instant date) {
+		this.date = date;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
-	}
-	
-	public Set<Architect> getArchitect() {
-		return architect;
 	}
 
 	@Override
@@ -74,13 +74,10 @@ public class CategoryActivities implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoryActivities other = (CategoryActivities) obj;
+		Complaint other = (Complaint) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
+
 	
 	
 }

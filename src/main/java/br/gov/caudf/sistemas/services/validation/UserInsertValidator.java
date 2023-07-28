@@ -19,7 +19,7 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 	
 	@Override
 	public void initialize(UserInsertValid ann) {
-	}
+	} 
 
 	@Override
 	public boolean isValid(UserInsertDTO dto, ConstraintValidatorContext context) {
