@@ -1,5 +1,7 @@
 package br.gov.caudf.sistemas.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,6 +25,13 @@ public class ComplaintService {
 		Complaint entity = new Complaint();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
+		return new ComplaintDTO(entity);
+	}
+	
+	@Transactional(readOnly = true)
+	public ComplaintDTO findById(Long id) {
+		Optional<Complaint> obj = repository.findById(id);
+		Complaint entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não existe no banco de dados."));
 		return new ComplaintDTO(entity);
 	}
 	
