@@ -5,10 +5,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.gov.caudf.sistemas.dto.CategoryActivitiesDTO;
 import br.gov.caudf.sistemas.dto.ComplaintDTO;
+import br.gov.caudf.sistemas.entities.CategoryActivities;
 import br.gov.caudf.sistemas.entities.Complaint;
 import br.gov.caudf.sistemas.repositories.ComplaintRepository;
 import br.gov.caudf.sistemas.services.exceptions.DatabaseException;
@@ -21,6 +25,12 @@ public class ComplaintService {
 
 	@Autowired
 	private ComplaintRepository repository;
+	
+	@Transactional(readOnly = true)
+	public Page<ComplaintDTO> findAllPaged(PageRequest pageRequest) {
+		Page<Complaint> list = repository.findAll(pageRequest);
+		return list.map(x -> new ComplaintDTO(x));
+	}
 
 	@Transactional
 	public ComplaintDTO insert(ComplaintDTO dto) {
@@ -60,20 +70,12 @@ public class ComplaintService {
 		}
 	}
 
-	/*
-	 * @Transactional(readOnly = true) public ComplaintDTO update(Long id,
-	 * ComplaintDTO dto) { Optional<Complaint> obj =
-	 * Optional.ofNullable(repository.getOne(id)); Complaint entity = obj
-	 * .orElseThrow(() -> new
-	 * ResourceNotFoundException("Entidade não existe no banco de dados"));
-	 * copyDtoToEntity(dto, entity); entity = repository.save(entity); return new
-	 * ComplaintDTO(entity); }
-	 */
-
 	private void copyDtoToEntity(ComplaintDTO dto, Complaint entity) {
 		entity.setNumber(dto.getNumber());
 		entity.setProtocol(dto.getProtocol());
 		entity.setDate(dto.getDate());
 	}
+
+	
 
 }
