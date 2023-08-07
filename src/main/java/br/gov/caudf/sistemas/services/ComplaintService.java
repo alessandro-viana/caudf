@@ -72,7 +72,6 @@ public class ComplaintService {
 
 	private void copyDtoToEntity(ComplaintDTO dto, Complaint entity) {
 		entity.setNumber(dto.getNumber());
-		entity.setProtocol(dto.getProtocol());
 		entity.setDate(dto.getDate());
 	}
 

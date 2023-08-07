@@ -2,8 +2,6 @@ package br.gov.caudf.sistemas.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -11,32 +9,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_complaint")
-public class Complaint implements Serializable {
+@Table(name = "tb_protocol")
+public class Protocol implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String number;
+	private String protocol;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant date;
 	
-	@OneToMany(mappedBy = "complaint")
-	private List<Protocol> protocols = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "complaint_id")
+	private Complaint complaint;
 	
-	public Complaint() {
+	public Protocol() {
 	}
 	
-	public Complaint(Long id, String number, String protocol, Instant date) {
-		super();
+	public Protocol(Long id, String protocol, Instant date) {
 		this.id = id;
-		this.number = number;
+		this.protocol = protocol;
 		this.date = date;
 	}
 
@@ -48,12 +47,12 @@ public class Complaint implements Serializable {
 		this.id = id;
 	}
 
-	public String getNumber() {
-		return number;
+	public String getProtocol() {
+		return protocol;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
 
 	public Instant getDate() {
@@ -68,10 +67,6 @@ public class Complaint implements Serializable {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	
-	public List<Protocol> getProtocols() {
-		return protocols;
-	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -81,11 +76,8 @@ public class Complaint implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Complaint other = (Complaint) obj;
+		Protocol other = (Protocol) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	
-	
 	
 }

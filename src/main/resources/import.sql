@@ -4,21 +4,31 @@ INSERT INTO tb_user (first_name, last_name, email, password) VALUES ('Luciana', 
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('38307', '1677664/2023', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('S/N', '1663086/2023', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('S/N', '1465251/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('35391', '1554672/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('S/N', '1522438/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('34337', '1522304/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('S/N', '1560738/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('36055', '1556371/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('36397', '1595426/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('36665', '1684099/2023', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('36707', '1655674/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('36936', '1706725/2023', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('37605', '1636049/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('S/N', '1635036/2022', NOW());
-INSERT INTO tb_complaint (number, protocol, date) VALUES ('37865', '1708989/2023', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('38307', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('S/N', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('39576',NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('39853', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('S/N', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('S/N', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('35391', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('34337', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('36055', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('36397', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('36665', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('36707', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('36936', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('37605', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('S/N', NOW());
+INSERT INTO tb_complaint (number, date) VALUES ('37865', NOW());
+
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1677664/2023', NOW(), 1);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1663086/2023', NOW(), 2);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1784108/2023', NOW(), 3);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1784115/2023', NOW(), 3);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1781424/2023', NOW(), 4);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1465251/2022', NOW(), 5);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1495378/2022', NOW(), 6);
+INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1514351/2022', NOW(), 7);
 
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
