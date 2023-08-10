@@ -30,6 +30,10 @@ INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1465251/2022', N
 INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1495378/2022', NOW(), 6);
 INSERT INTO tb_protocol (protocol, date, complaint_id) VALUES ('1514351/2022', NOW(), 7);
 
+INSERT INTO tb_process (number, date, protocol_id) VALUES ('1566064/2022', NOW(),5);
+INSERT INTO tb_process (number, date, protocol_id) VALUES ('1509035/2022', NOW(),6);
+INSERT INTO tb_process (number, date, protocol_id) VALUES ('1507704/2022', NOW(),6);
+
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);

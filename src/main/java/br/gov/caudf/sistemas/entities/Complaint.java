@@ -72,6 +72,8 @@ public class Complaint implements Serializable {
 	public List<Protocol> getProtocols() {
 		return protocols;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {

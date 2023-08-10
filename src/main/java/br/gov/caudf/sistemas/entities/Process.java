@@ -2,8 +2,6 @@ package br.gov.caudf.sistemas.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -13,35 +11,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_protocol")
-public class Protocol implements Serializable {
+@Table(name = "tb_process")
+public class Process implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String protocol;
+	private String number;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant date;
 	
 	@ManyToOne
-	@JoinColumn(name = "complaint_id")
-	private Complaint complaint;
+	@JoinColumn(name = "protocol_id")
+	private Protocol protocol;
 	
-	@OneToMany(mappedBy = "protocol")
-	private List<Process> process = new ArrayList<>();
-	
-	public Protocol() {
+	public Process() {
 	}
 	
-	public Protocol(Long id, String protocol, Instant date) {
+	public Process(Long id, String number, Instant date) {
+		super();
 		this.id = id;
-		this.protocol = protocol;
+		this.number = number;
 		this.date = date;
 	}
 
@@ -53,12 +48,12 @@ public class Protocol implements Serializable {
 		this.id = id;
 	}
 
-	public String getProtocol() {
-		return protocol;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	public Instant getDate() {
@@ -74,10 +69,6 @@ public class Protocol implements Serializable {
 		return Objects.hash(id);
 	}
 
-	public List<Process> getProcess() {
-		return process;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -86,7 +77,7 @@ public class Protocol implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Protocol other = (Protocol) obj;
+		Process other = (Process) obj;
 		return Objects.equals(id, other.id);
 	}
 	
