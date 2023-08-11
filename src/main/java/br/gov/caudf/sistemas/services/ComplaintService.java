@@ -10,11 +10,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.gov.caudf.sistemas.dto.ArchitectDTO;
 import br.gov.caudf.sistemas.dto.CategoryActivitiesDTO;
 import br.gov.caudf.sistemas.dto.ComplaintDTO;
+import br.gov.caudf.sistemas.entities.Architect;
 import br.gov.caudf.sistemas.entities.CategoryActivities;
 import br.gov.caudf.sistemas.entities.Complaint;
+import br.gov.caudf.sistemas.repositories.CategoryActivitiesRepository;
 import br.gov.caudf.sistemas.repositories.ComplaintRepository;
+import br.gov.caudf.sistemas.repositories.ProtocolRepository;
 import br.gov.caudf.sistemas.services.exceptions.DatabaseException;
 import br.gov.caudf.sistemas.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +29,9 @@ public class ComplaintService {
 
 	@Autowired
 	private ComplaintRepository repository;
+	
+	@Autowired
+	private ProtocolRepository protocolRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<ComplaintDTO> findAllPaged(PageRequest pageRequest) {
@@ -45,7 +52,7 @@ public class ComplaintService {
 		Optional<Complaint> obj = repository.findById(id);
 		Complaint entity = obj
 				.orElseThrow(() -> new ResourceNotFoundException("Entidade não existe no banco de dados."));
-		return new ComplaintDTO(entity);
+		return new ComplaintDTO(entity, entity.getProtocols());
 	}
 
 	public void delete(Long id) {

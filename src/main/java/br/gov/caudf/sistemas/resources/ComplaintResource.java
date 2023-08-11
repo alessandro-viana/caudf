@@ -43,7 +43,6 @@ public class ComplaintResource {
 		
 	}
 	
-	
 	@PostMapping
 	public ResponseEntity<ComplaintDTO> insert(@RequestBody ComplaintDTO dto){
 		dto = service.insert(dto);

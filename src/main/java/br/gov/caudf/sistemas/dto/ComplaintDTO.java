@@ -2,8 +2,12 @@ package br.gov.caudf.sistemas.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import br.gov.caudf.sistemas.entities.Complaint;
+import br.gov.caudf.sistemas.entities.Protocol;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 
@@ -16,9 +20,8 @@ public class ComplaintDTO implements Serializable {
 	private String number;
 	@PastOrPresent(message = "A data não pode ser futura")
 	private Instant date;
-
-	public ComplaintDTO() {
-	}
+	
+	private List<ProtocolDTO> protocols = new ArrayList<>();
 	
 	public ComplaintDTO(Long id, String number, Instant date) {
 		super();
@@ -31,6 +34,15 @@ public class ComplaintDTO implements Serializable {
 		id = entity.getId();
 		number = entity.getNumber();
 		date = entity.getDate();
+	}
+	
+	public ComplaintDTO(Complaint entity, List<Protocol> protocols) {
+		this(entity);
+		protocols.forEach(prot -> this.protocols.add(new ProtocolDTO(prot)));
+	}
+	
+	public ComplaintDTO() {
+		
 	}
 
 	public Long getId() {
@@ -56,7 +68,8 @@ public class ComplaintDTO implements Serializable {
 	public void setDate(Instant date) {
 		this.date = date;
 	}
-	
-	
 
+	public List<ProtocolDTO> getProtocols() {
+		return protocols;
+	}
 }
