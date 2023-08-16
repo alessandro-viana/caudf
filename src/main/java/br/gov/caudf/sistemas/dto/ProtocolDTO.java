@@ -32,6 +32,7 @@ public class ProtocolDTO implements Serializable {
 	
 	public ProtocolDTO(Protocol entity) {
 		this.id = entity.getId();
+		this.protocol = entity.getProtocol();
 		this.date = entity.getDate();
 	}
 	
