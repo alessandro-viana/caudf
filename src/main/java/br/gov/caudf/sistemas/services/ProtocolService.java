@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.caudf.sistemas.dto.ArchitectDTO;
+import br.gov.caudf.sistemas.dto.CategoryActivitiesDTO;
 import br.gov.caudf.sistemas.dto.ProtocolDTO;
 import br.gov.caudf.sistemas.entities.Architect;
+import br.gov.caudf.sistemas.entities.CategoryActivities;
 import br.gov.caudf.sistemas.entities.Protocol;
 import br.gov.caudf.sistemas.repositories.ProtocolRepository;
 import br.gov.caudf.sistemas.services.exceptions.ResourceNotFoundException;
+import jakarta.validation.Valid;
 
 @Service
 public class ProtocolService {
@@ -34,14 +37,18 @@ public class ProtocolService {
 		return new ProtocolDTO(entity);
 	}
 	
-	/*
-	 * @Transactional(readOnly = true) public ArchitectDTO findById(Long id) {
-	 * Optional<Architect> obj = repository.findById(id); Architect entity =
-	 * obj.orElseThrow(() -> new
-	 * ResourceNotFoundException("Entidade não existe no banco de dados.")); return
-	 * new ArchitectDTO(entity, entity.getCategories()); }
-	 */
-	
-	
+	@Transactional
+	public ProtocolDTO insert(ProtocolDTO dto) {
+		Protocol entity = new Protocol();
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity);
+		return new ProtocolDTO(entity);
+	}
+		
+	private void copyDtoToEntity(ProtocolDTO dto, Protocol entity) {
+		entity.setProtocol(dto.getProtocol());
+		entity.setDate(dto.getDate());
+				
+	}	
 	
 }
